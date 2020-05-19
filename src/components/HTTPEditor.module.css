@@ -1,0 +1,8 @@
+.editorWidth{
+  width: 75%;
+}
+@media only screen and (max-width: 500px){
+  .editorWidth{
+    width: 95%;
+  }
+}
