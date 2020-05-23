@@ -69,30 +69,30 @@ class App extends Component {
     this.setState({ responses: [...this.state.responses, ...responses] });
   };
   render = () => (
-    <div className='container-fluid p-0 w-100 h-100'>
-      <div className='row no-gutters w-100 h-100'>
-        <div className='col-xs-12 col-lg-2 mt-auto mb-auto'>
-          <div className='row ml-3'>
+    <div className="container-fluid p-0 w-100 h-100">
+      <div className="row no-gutters w-100 h-100">
+        <div className="col-xs-12 col-lg-2 mt-auto mb-auto">
+          <div className="row ml-3">
             <HTTPButton
-              type='GET'
+              type="GET"
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type='POST'
+              type="POST"
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type='PUT'
+              type="PUT"
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type='DELETE'
+              type="DELETE"
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
           </div>
         </div>
-        <div className='col-xs-12 col-lg-6'>
-          <div className='m-3 w-100'>
+        <div className="col-xs-12 col-lg-6">
+          <div className="m-3 w-100">
             {this.state.requests.map((request, index) => (
               <HTTPEditor
                 key={index}
@@ -105,18 +105,23 @@ class App extends Component {
             ))}
           </div>
         </div>
-        <div className='col-xs-12 col-lg-4 bg-dark'>
-          <div className='d-flex flex-column'>
+        <div className="col-xs-12 col-lg-4 bg-dark">
+          <div className="d-flex flex-column">
             <button
-              className='m-auto btn btn-primary'
+              className="m-auto btn btn-primary"
               onClick={this.sendRequests}
             >
               Send Requests
             </button>
-            <div>
-              <div className='mb-3'>
+            <div class="response-container">
+              <div className="mb-3">
                 {this.state.responses.map((response, index) => (
-                  <div className='text-wrap text-break text-success' key={index}>{JSON.stringify(response)}</div>
+                  <div
+                    className="text-wrap text-break text-success"
+                    key={index}
+                  >
+                    {JSON.stringify(response)}
+                  </div>
                 ))}
               </div>
             </div>
