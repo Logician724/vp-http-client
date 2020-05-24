@@ -31,6 +31,12 @@
   height: 90vh;
   overflow-y: scroll;
 }
+.HTTPEditors-container {
+  width: 50vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
 @keyframes App-logo-spin {
   from {

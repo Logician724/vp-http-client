@@ -91,7 +91,8 @@ class App extends Component {
             ></HTTPButton>
           </div>
         </div>
-        <div className="col-xs-12 col-lg-6">
+
+        <div className="HTTPEditors-container">
           <div className="m-3 w-100">
             {this.state.requests.map((request, index) => (
               <HTTPEditor
