@@ -49,6 +49,7 @@ class App extends Component {
         switch (request.type) {
           case 'GET':
             response = await axios.get(request.url);
+            console.log(response);
             break;
           case 'POST':
             response = await axios.post(
@@ -72,12 +73,36 @@ class App extends Component {
             console.error('Unsupported request type');
         }
         responses.push(response);
+       
       } catch (err) {
         responses.push(err);
+        console.log(typeof err);
       }
     }
     this.setState({ responses: [...this.state.responses, ...responses] });
+    this.responseMsg(responses)
   };
+///--------------------------------------------------------------------------------------------------------------------------------------------
+//Resource: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status 
+
+responseMsg = (responses) => {
+    let result = []
+    for (const response of this.state.responses) {
+        let temp = null;
+        if(response.status >= 200 && response.status <=299)
+            temp = "{ msg: HTTP " + response.status + " Success } " + JSON.stringify(response.data, undefined,4) ;
+        else 
+            temp = "{ msg: Request Failed }" ;
+
+        result.push(temp);
+    }
+           
+            return result;
+  };
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+
   render = () => (
     <div className="container-fluid p-0 w-100 h-100">
       <div className="row no-gutters w-100 h-100">
@@ -124,9 +149,9 @@ class App extends Component {
             >
               Send Requests
             </button>
-            <div class="response-container">
+            <div className="response-container">
               <div className="mb-3">
-                {this.state.responses.map((response, index) => (
+                { this.responseMsg(this.state.responses).map((response, index) => (
                   <div
                     className="text-wrap text-break text-success"
                     key={index}
