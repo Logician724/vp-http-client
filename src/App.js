@@ -51,9 +51,19 @@ class App extends Component {
             response = await axios.get(request.url);
             break;
           case 'POST':
+            response = await axios.post(
+              request.url,
+              request.body ? request.body : {}
+            );
+            break;
           case 'PUT':
-          case 'DELETE':
             response = await axios.put(
+              request.url,
+              request.body ? request.body : {}
+            );
+            break;
+          case 'DELETE':
+            response = await axios.delete(
               request.url,
               request.body ? request.body : {}
             );
