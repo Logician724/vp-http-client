@@ -73,62 +73,68 @@ class App extends Component {
             console.error('Unsupported request type');
         }
         responses.push(response);
-       
       } catch (err) {
         responses.push(err);
         console.log(typeof err);
       }
     }
     this.setState({ responses: [...this.state.responses, ...responses] });
-    this.responseMsg(responses)
+    this.responseMsg(responses);
   };
-///--------------------------------------------------------------------------------------------------------------------------------------------
-//Resource: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status 
+  ///--------------------------------------------------------------------------------------------------------------------------------------------
+  //Resource: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
-responseMsg = (responses) => {
-    let result = []
+  responseMsg = (responses) => {
+    let result = [];
     for (const response of this.state.responses) {
-        let temp = null;
-        if(response.status >= 200 && response.status <=299)
-            temp = "{ msg: HTTP " + response.status + " Success } " + JSON.stringify(response.data, undefined,4) ;
-        else 
-            temp = "{ msg: Request Failed }" ;
+      let temp = null;
+      if (response.status) {
+        temp =
+          '{ msg: HTTP ' +
+          response.status +
+          ' Success } ' +
+          JSON.stringify(response.data, undefined, 2);
+      } else if(response.response) {
+        temp = `HTTP ${response.response.status} Failure
+${JSON.stringify(response.response, undefined, 2)}`;
+      }else{
+        temp = `HTTP Network Error or Unknown`
+      }
 
-        result.push(temp);
+      result.push(temp);
     }
-           
-            return result;
+
+    return result;
   };
 
-//---------------------------------------------------------------------------------------------------------------------------------------------
-
+  //---------------------------------------------------------------------------------------------------------------------------------------------
 
   render = () => (
-    <div className="container-fluid p-0 w-100 h-100">
-      <div className="row no-gutters w-100 h-100">
-        <div className="col-xs-12 col-lg-2 mt-auto mb-auto">
-          <div className="row ml-3">
+    <div className='container-fluid p-0 w-100 h-100'>
+      <div className='row no-gutters w-100 h-100'>
+        <div className='col-xs-12 col-lg-2 mt-auto mb-auto'>
+          <div className='row ml-3'>
             <HTTPButton
-              type="GET"
+              type='GET'
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type="POST"
+              type='POST'
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type="PUT"
+              type='PUT'
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
             <HTTPButton
-              type="DELETE"
+              type='DELETE'
               clickHandler={this.handleButtonClick}
             ></HTTPButton>
           </div>
         </div>
 
-        <div className="HTTPEditors-container">
-          <div className="m-3 w-100">
+        <div className='HTTPEditors-container'>
+          <div className='m-3 w-100'>
             {this.state.requests.map((request, index) => (
               <HTTPEditor
                 key={index}
@@ -141,24 +147,31 @@ responseMsg = (responses) => {
             ))}
           </div>
         </div>
-        <div className="col-xs-12 col-lg-4 bg-dark">
-          <div className="d-flex flex-column">
+        <div className='col-xs-12 col-lg-4 bg-dark'>
+          <div className='d-flex flex-column'>
             <button
-              className="m-auto btn btn-primary"
+              className='m-auto btn btn-primary'
               onClick={this.sendRequests}
             >
               Send Requests
             </button>
-            <div className="response-container">
-              <div className="mb-3">
-                { this.responseMsg(this.state.responses).map((response, index) => (
-                  <div
-                    className="text-wrap text-break text-success"
-                    key={index}
-                  >
-                    {JSON.stringify(response)}
-                  </div>
-                ))}
+            <div className='response-container'>
+              <div className='mb-3 ml-1 mr-1'>
+                {this.responseMsg(this.state.responses).map(
+                  (response, index) => (
+                    <div
+                      className='text-wrap text-break m'
+                      key={index}
+                      style={{
+                        whiteSpace: "pre-line",
+                      }}
+                    >
+                      
+                        <pre className="text-success">{response}</pre>
+                      
+                    </div>
+                  )
+                )}
               </div>
             </div>
           </div>
