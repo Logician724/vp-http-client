@@ -24,12 +24,11 @@ const HTTPEditor = (props) => (
             placeholder='JSON Body'
             className='form-control'
             rows='1'
+            value={props.body}
             onChange={(event) =>
               props.bodyChangeHandler(event, props.id)
             }
-          >
-            {props.body}
-          </textarea>
+          />
         </div>
       ) : null}
     </div>
