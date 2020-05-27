@@ -40,6 +40,14 @@ class App extends Component {
     requests[index] = newRequest;
     this.setState({ requests });
   };
+
+  handleBodyChange = (event, index) => {
+    const requests = [...this.state.requests];
+    const newRequest = { ...requests[index], body: event.target.value };
+    requests[index] = newRequest;
+    this.setState({ requests });
+  };
+
   sendRequests = async () => {
     console.log('sending requests');
     let responses = [];
@@ -54,7 +62,11 @@ class App extends Component {
           case 'POST':
             response = await axios.post(
               request.url,
-              request.body ? request.body : {}
+              request.body ? request.body : {},
+             { Headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              }}
             );
             break;
           case 'PUT':
@@ -143,6 +155,7 @@ ${JSON.stringify(response.response, undefined, 2)}`;
                 url={request.url}
                 body={request.body}
                 URLChangeHandler={this.handleURLChange}
+                bodyChangeHandler={this.handleBodyChange}
               ></HTTPEditor>
             ))}
           </div>
